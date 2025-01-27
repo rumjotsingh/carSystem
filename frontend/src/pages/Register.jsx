@@ -19,7 +19,7 @@ function Register() {
   };
   const handleRegister = async () => {
     try {
-      const res = await axios.post("http://localhost:8080/api/v1/auth/register", form);
+      const res = await axios.post("https://carsystem-backend.onrender.com/api/v1/auth/register", form);
       if (res.data.success) {
         toast.success("Registration successful!", {
           position: "top-center",
@@ -38,7 +38,7 @@ const handleGoogleLogin = async (credentialResponse) => {
     const jwt = credentialResponse.credential;
     const payload = JSON.parse(atob(jwt.split(".")[1])); // Decode JWT
     try {
-      const res = await axios.post("http://localhost:8080/api/v1/auth/google-login", {
+      const res = await axios.post("https://carsystem-backend.onrender.com/api/v1/auth/google-login", {
         googleId: payload.sub,
         email: payload.email,
         name: payload.name,
