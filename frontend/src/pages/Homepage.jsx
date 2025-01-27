@@ -10,7 +10,7 @@ function Homepage() {
   const navigate = useNavigate();
   const getAllCars = async () => {
     try {
-      const response = await axios.get("http://localhost:8080/api/v1/cars/all-cars");
+      const response = await axios.get("https://carsystem-backend.onrender.com/api/v1/cars/all-cars");
       setCars(response.data.cars);
     } catch (error) {
       console.error("Error fetching car data:", error);
