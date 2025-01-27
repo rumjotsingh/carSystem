@@ -44,7 +44,7 @@ const EditPage = () => {
       setLoading(true);
       const token=localStorage.getItem('token');
     await axios.put(
-      `http://localhost:8080/api/v1/cars/car-listing/edit/${id}`,
+      `https://carsystem-backend.onrender.com/api/v1/cars/car-listing/edit/${id}`,
         formData,
         {
           headers: {
