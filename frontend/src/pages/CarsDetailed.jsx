@@ -36,7 +36,7 @@ function CarsDetailed() {
     if (isDeleted) {
       const deleteCarListing = async () => {
         try {
-          await axios.delete(`http://localhost:8080/api/v1/cars/car-listing/${id}`, {
+          await axios.delete(`https://carsystem-backend.onrender.com/api/v1/cars/car-listing/${id}`, {
             headers: {
               "Content-Type": "application/json",
               Authorization: `Bearer ${token}`,
@@ -80,7 +80,7 @@ function CarsDetailed() {
         return;
       }
 
-      const response = await fetch(`http://localhost:8080/api/v1/reviews/${reviewId}`, {
+      const response = await fetch(`https://carsystem-backend.onrender.com/api/v1/reviews/${reviewId}`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
@@ -135,7 +135,7 @@ function CarsDetailed() {
           <CardMedia
             component="img"
             height="300"
-            image={`http://localhost:8080/${details.image.url.replace(/\\/g, "/")}`}
+            image={`https://carsystem-backend.onrender.com/${details.image.url.replace(/\\/g, "/")}`}
             alt={`${details.company} car`}
             sx={{ objectFit: "cover" }}
           />
