@@ -19,7 +19,7 @@ const ReviewsForm = ({refresh}) => {
           return;
         }
   
-        const response = await fetch(`http://localhost:8080/api/v1/reviews/cars/${id}/reviews`, {
+        const response = await fetch(`https://carsystem-backend.onrender.com/api/v1/reviews/cars/${id}/reviews`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
