@@ -54,7 +54,7 @@ return (
                   <CardMedia
                     component="img"
                     height="200"
-                    image={`http://localhost:8080/${car.image.url.replace(/\\/g, "/")}`}
+                    image={`https://carsystem-backend.onrender.com/${car.image.url.replace(/\\/g, "/")}`}
 
                     alt={`${car.company} car`}
                     sx={{ objectFit: "cover" }}
