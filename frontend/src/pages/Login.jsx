@@ -30,7 +30,7 @@ const {
   } = useForm();
 const handleLogin = async (data) => {
     try {
-      const res = await axios.post("http://localhost:8080/api/v1/auth/login", {
+      const res = await axios.post("https://carsystem-backend.onrender.com/api/v1/auth/login", {
         email: data.email,
         password: data.password,
       });
@@ -57,7 +57,7 @@ const handleLogin = async (data) => {
     const payload = JSON.parse(atob(jwt.split(".")[1])); // Decode JWT
     try {
       const res = await axios.post(
-        "http://localhost:8080/api/v1/auth/google-login",
+        "https://carsystem-backend.onrender.com/api/v1/auth/google-login",
         {
           googleId: payload.sub,
           email: payload.email,
