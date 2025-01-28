@@ -38,12 +38,18 @@ export const deleteReview = async (req, res) => {
   try {
     const { reviewId } = req.params;
     const { carId } = req.body;
+      const userId = req.user.userId;
 
     // Find and delete the review
 
     const review = await Review.findById(reviewId);
     if (!review) {
       return res.status(404).json({ message: "Review not found" });
+    }
+      if (review.author.toString() !== userId) {
+      return res
+        .status(403)
+        .json({ message: "You are not authorized to delete this review" });
     }
 
     // Check if the review belongs to the car
