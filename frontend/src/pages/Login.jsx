@@ -21,7 +21,7 @@ function Login() {
   const togglePasswordVisibility = () => {
     setShowPassword((prev) => !prev);
   };
-  const Client = import.meta.env.VITE_API_KEY; // Google OAuth Client ID
+  const Client = "931493966829-c81cro8s2j4sbgllcpnvjiiamsvcud2s.apps.googleusercontent.com"; // Google OAuth Client ID
   const navigate = useNavigate();
 const {
     register,
