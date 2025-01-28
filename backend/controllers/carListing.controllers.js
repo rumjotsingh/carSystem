@@ -170,7 +170,8 @@ export const CarSearchController = async (req, res) => {
     const results = await CarsModel.find({
       $or: [
         { company: { $regex: query, $options: "i" } },
-        { description: { $regex: query, $options: "i" } },
+         { color: { $regex: query, $options: "i" } },
+        { engine: { $regex: query, $options: "i" } },
       ],
     });
     res.status(200).json(results);
