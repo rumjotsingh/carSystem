@@ -69,7 +69,7 @@ return (
           alignItems: "center",
         }}
       >
-        <GoogleOAuthProvider clientId={Client}>
+    
           <Box
             sx={{
               width: "100%",
@@ -133,13 +133,9 @@ return (
               Register
             </Button>
             <Divider sx={{ marginY: 2 }}>OR</Divider>
-            <GoogleLogin
-              id="GoogleLogin"
-              onSuccess={handleGoogleLogin}
-              onError={() => console.log("Google Login Failed")}
-            />
+         
           </Box>
-        </GoogleOAuthProvider>
+        
       </Box>
       <Footer />
     </>
