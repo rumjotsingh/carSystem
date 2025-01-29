@@ -132,8 +132,7 @@ return (
             >
               Register
             </Button>
-            <Divider sx={{ marginY: 2 }}>OR</Divider>
-         
+
           </Box>
         
       </Box>
