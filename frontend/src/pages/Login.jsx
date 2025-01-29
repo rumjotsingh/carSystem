@@ -147,10 +147,7 @@ return (
               </Button>
             </form>
             <br></br>
-            <Typography variant="body1" sx={{ mt: 3 }}>
-              OR
-            </Typography>
-            <br></br>
+          
            
           </Box>
        
