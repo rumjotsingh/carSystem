@@ -86,7 +86,7 @@ return (
     <>
       <Navbar />
       <Container maxWidth="sm" sx={{ mt: 10,mb:10 ,textAlign: "center" }}>
-        <GoogleOAuthProvider clientId={Client}>
+     
           <Box
             sx={{
               p: 4,
@@ -151,12 +151,9 @@ return (
               OR
             </Typography>
             <br></br>
-            <GoogleLogin
-              onSuccess={handleGoogleLogin}
-              onError={() => toast.error("Google Login Failed")}
-            />
+           
           </Box>
-        </GoogleOAuthProvider>
+       
       </Container>
       <Footer />
     </>
