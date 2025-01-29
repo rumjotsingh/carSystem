@@ -11,7 +11,7 @@ import IconButton from "@mui/material/IconButton";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 function Register() {
   const [form, setForm] = useState({ name: "", email: "", password: "" });
-  const Client = "931493966829-c81cro8s2j4sbgllcpnvjiiamsvcud2s.apps.googleusercontent.com";
+  const Client = "931493966829-npbb5b7a9qhbt5ddl69kgtansf77g3at.apps.googleusercontent.com";
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const togglePasswordVisibility = () => {
