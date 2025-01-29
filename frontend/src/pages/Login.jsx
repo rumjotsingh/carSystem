@@ -21,7 +21,7 @@ function Login() {
   const togglePasswordVisibility = () => {
     setShowPassword((prev) => !prev);
   };
-  const Client = "931493966829-c81cro8s2j4sbgllcpnvjiiamsvcud2s.apps.googleusercontent.com"; // Google OAuth Client ID
+  const Client = "931493966829-npbb5b7a9qhbt5ddl69kgtansf77g3at.apps.googleusercontent.com"; // Google OAuth Client ID
   const navigate = useNavigate();
 const {
     register,
