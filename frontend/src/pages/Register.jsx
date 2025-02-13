@@ -20,7 +20,7 @@ function Register() {
   const handleRegister = async () => {
     try {
       const res = await axios.post("https://carsystem-backend.onrender.com/api/v1/auth/register", form);
-      if (res.data.success) {
+      if (res.data.sucess) {
         toast.success("Registration successful!", {
           position: "top-center",
           autoClose: 4000,
