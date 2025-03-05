@@ -11,6 +11,7 @@ import CarsDetailed from './pages/CarsDetailed';
 import { ToastContainer } from "react-toastify";
 import EditPage from './pages/EditPage';
 import Result from './pages/Result';
+import CarLoanCalculator from "./pages/CarLoanCalc";
 const App = () => {
    return(
     <BrowserRouter>
@@ -22,6 +23,7 @@ const App = () => {
         <Route path="/add-car" element={<CarsForm/>}></Route>
         <Route path="/cars/:id" element={<CarsDetailed/>}></Route>
         <Route path="/edit/:id" element={<EditPage/>}></Route>
+        <Route path="/car-loan/:id" element={<CarLoanCalculator />}></Route>
         <Route path="/policy" element={<Policy/>}></Route>
         <Route path="/contact" element={<Contact/>}></Route>
         <Route path="/results" element={<Result/>}></Route>
