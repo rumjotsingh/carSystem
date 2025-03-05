@@ -144,7 +144,7 @@ function CarsDetailed() {
           <CardMedia
             component="img"
             height="300"
-            image={`/${details.image.url.replace(/\\/g, "/")}`}
+             image={`https://carsystem-backend.onrender.com/${details.image.url.replace(/\\/g, "/")}`}
             alt={`${details.company} car`}
             sx={{ objectFit: "cover" }}
           />
