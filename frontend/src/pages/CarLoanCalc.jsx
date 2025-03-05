@@ -14,7 +14,7 @@ const CarLoanCalculator = () => {
   useEffect(() => {
     const fetchCarPrice = async () => {
       try {
-        const response = await fetch(`http://localhost:8080/api/v1/cars/all-cars/${id}`);
+        const response = await fetch(`https://carsystem-backend.onrender.com/api/v1/cars/all-cars/${id}`);
         const carData = await response.json();
 
         setCarPrice(carData.price);
