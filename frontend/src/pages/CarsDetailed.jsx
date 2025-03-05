@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
-import { Box, Card, CardMedia, CardContent, Typography, Button, Grid, CircularProgress, Container, Divider, Rating } from "@mui/material";
+import { useParams, useNavigate, } from "react-router-dom";
+import { Box, Card, CardMedia, CardContent, Typography,Modal, Button, Grid, CircularProgress, Container, Divider, Rating } from "@mui/material";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import axios from "axios";
@@ -12,6 +12,7 @@ function CarsDetailed() {
   const [details, setDetails] = useState(null);
   const [isDeleted, setIsDeleted] = useState(false);
   const [refreshTrigger, setRefreshTrigger] = useState(false);
+  const [openModal, setOpenModal] = useState(false);
 
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
@@ -19,7 +20,7 @@ function CarsDetailed() {
   // Fetch car details
   const fetchDetails = async () => {
     try {
-      const response = await fetch(`https://carsystem-backend.onrender.com/api/v1/cars/all-cars/${id}`);
+      const response = await fetch(`http://localhost:8080/api/v1/cars/all-cars/${id}`);
       const data = await response.json();
       setDetails(data);
     } catch (error) {
@@ -36,7 +37,7 @@ function CarsDetailed() {
     if (isDeleted) {
       const deleteCarListing = async () => {
         try {
-          await axios.delete(`https://carsystem-backend.onrender.com/api/v1/cars/car-listing/${id}`, {
+          await axios.delete(`http://localhost:8080/api/v1/cars/car-listing/${id}`, {
             headers: {
               "Content-Type": "application/json",
               Authorization: `Bearer ${token}`,
@@ -66,10 +67,18 @@ function CarsDetailed() {
   const triggerDelete = () => {
     setIsDeleted(true);
   };
+  
+  // const rtoCharge = (details.price)* 0.1; // 10% RTO
+  // const insuranceCharge =details.price* 0.01; // 1% Insurance
+  // const totalOnRoadPrice = details.price + rtoCharge + insuranceCharge;
 
   const handleCarEdit = (id) => {
     navigate(`/edit/${id}`);
   };
+  const handleCarLoan = (id) => {
+    navigate(`/car-loan/${id}`,{ state: { carPrice: details.price } });
+    
+  }
 
   // Handle review deletion
   const handleDeleteReview = async (reviewId) => {
@@ -80,7 +89,7 @@ function CarsDetailed() {
         return;
       }
 
-      const response = await fetch(`https://carsystem-backend.onrender.com/api/v1/reviews/${reviewId}`, {
+      const response = await fetch(`http://localhost:8080/api/v1/reviews/${reviewId}`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
@@ -135,7 +144,7 @@ function CarsDetailed() {
           <CardMedia
             component="img"
             height="300"
-            image={`https://carsystem-backend.onrender.com/${details.image.url.replace(/\\/g, "/")}`}
+            image={`http://localhost:8080/${details.image.url.replace(/\\/g, "/")}`}
             alt={`${details.company} car`}
             sx={{ objectFit: "cover" }}
           />
@@ -161,13 +170,14 @@ function CarsDetailed() {
                 <Typography variant="body1">
                   <strong>Color:</strong> {details.color}
                 </Typography>
-              </Grid>
+              </Grid> 
               <Grid item xs={12} sm={6}>
                 <Typography variant="body1">
-                  <strong>Price:</strong> ₹{details.price.toLocaleString()}
+                  <strong>Price:</strong> {new Intl.NumberFormat("en-IN").format(details.price)}
                 </Typography>
               </Grid>
             </Grid>
+
             <br />
             <Box display="flex" justifyContent="space-around" gap={4} sx={{ mt: 3 }}>
               {token ? (
@@ -178,6 +188,49 @@ function CarsDetailed() {
                   <Button variant="outlined" color="primary" size="large" onClick={() => handleCarEdit(details._id)}>
                     Edit
                   </Button>
+                  <Button variant="outlined" color="primary" size="large" onClick={() => handleCarLoan(details._id)}>
+                    Car Loan Calculator
+                  </Button>
+                  <Button variant="contained" size="large" color="primary" onClick={() => setOpenModal(true)} >
+                   Calculate On-Road Price
+                  </Button>
+                  <Modal open={openModal} onClose={() => setOpenModal(false)}>
+        <Box
+          sx={{
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            width: 400,
+            bgcolor: "white",
+            boxShadow: 24,
+            p: 4,
+            borderRadius: "10px",
+            textAlign: "center",
+          }}
+        >
+          <Typography variant="h6" gutterBottom>
+            On-Road Price Calculation
+          </Typography>
+          <Typography variant="body1">Car Price: ₹{details.price}</Typography>
+          <Typography variant="body1">RTO (10%): ₹{details.price*0.1}</Typography>
+          <Typography variant="body1">Insurance (1%): ₹{details.price*0.01}</Typography>
+          <Typography variant="h6" style={{ marginTop: "10px", fontWeight: "bold" }}>
+            Total On-Road Price: ₹{details.price+details.price*0.1+details.price*0.01}
+          </Typography>
+
+          <Button
+            variant="contained"
+            color="secondary"
+            onClick={() => setOpenModal(false)}
+            style={{ marginTop: "15px" }}
+          >
+            Close
+          </Button>
+        </Box>
+      </Modal>
+                  
+
                 </>
               ) : (
                 <Typography
