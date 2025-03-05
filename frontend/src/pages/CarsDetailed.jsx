@@ -209,15 +209,15 @@ function CarsDetailed() {
             textAlign: "center",
           }}
         >
-          <Typography variant="h6" gutterBottom>
-            On-Road Price Calculation
-          </Typography>
-          <Typography variant="body1">Car Price: ₹{details.price}</Typography>
-          <Typography variant="body1">RTO (10%): ₹{details.price*0.1}</Typography>
-          <Typography variant="body1">Insurance (1%): ₹{details.price*0.01}</Typography>
-          <Typography variant="h6" style={{ marginTop: "10px", fontWeight: "bold" }}>
-            Total On-Road Price: ₹{details.price+details.price*0.1+details.price*0.01}
-          </Typography>
+         <Typography variant="h6" gutterBottom>
+  On-Road Price Calculation
+</Typography>
+<Typography variant="body1">Car Price: ₹{details.price.toLocaleString("en-IN")}</Typography>
+<Typography variant="body1">RTO (10%): ₹{(details.price * 0.1).toLocaleString("en-IN")}</Typography>
+<Typography variant="body1">Insurance (1%): ₹{(details.price * 0.01).toLocaleString("en-IN")}</Typography>
+<Typography variant="h6" style={{ marginTop: "10px", fontWeight: "bold" }}>
+  Total On-Road Price: ₹{(details.price + details.price * 0.1 + details.price * 0.01).toLocaleString("en-IN")}
+</Typography>
 
           <Button
             variant="contained"
