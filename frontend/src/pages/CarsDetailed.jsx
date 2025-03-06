@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate, } from "react-router-dom";
-import { Box, Card, CardMedia, CardContent, Typography,Modal, Button, Grid, CircularProgress, Container, Divider, Rating } from "@mui/material";
+import { Box, Card,Stack, CardMedia, CardContent, Typography,Modal, Button, Grid, CircularProgress, Container, Divider, Rating } from "@mui/material";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import axios from "axios";
@@ -182,18 +182,51 @@ function CarsDetailed() {
             <Box display="flex" justifyContent="space-around" gap={4} sx={{ mt: 3 }}>
               {token ? (
                 <>
-                  <Button variant="contained" color="error" size="large" onClick={triggerDelete}>
-                    Delete
-                  </Button>
-                  <Button variant="outlined" color="primary" size="large" onClick={() => handleCarEdit(details._id)}>
-                    Edit
-                  </Button>
-                  <Button variant="outlined" color="primary" size="large" onClick={() => handleCarLoan(details._id)}>
-                    Car Loan Calculator
-                  </Button>
-                  <Button variant="contained" size="large" color="primary" onClick={() => setOpenModal(true)} >
-                   Calculate On-Road Price
-                  </Button>
+                                        <Stack 
+                      direction={{ xs: "column", sm: "row" }} 
+                      spacing={2} 
+                      sx={{ width: "100%", alignItems: "center" }}
+                    >
+                      <Button 
+                        variant="outlined" 
+                        color="primary" 
+                        size="large" 
+                        fullWidth 
+                        onClick={() => handleCarEdit(details._id)}
+                      >
+                        Edit
+                      </Button>
+                    
+                      <Button 
+                        variant="contained" 
+                        color="error" 
+                        size="large" 
+                        fullWidth 
+                        onClick={triggerDelete}
+                      >
+                        Delete
+                      </Button>
+                    
+                      <Button 
+                        variant="outlined" 
+                        color="primary" 
+                        size="large" 
+                        fullWidth 
+                        onClick={() => handleCarLoan(details._id)}
+                      >
+                        Car Loan Calculator
+                      </Button>
+                    
+                      <Button 
+                        variant="contained" 
+                        color="primary" 
+                        size="large" 
+                        fullWidth 
+                        onClick={() => setOpenModal(true)}
+                      >
+                        Calculate On-Road Price
+                      </Button>
+                    </Stack>
                   <Modal open={openModal} onClose={() => setOpenModal(false)}>
         <Box
           sx={{
