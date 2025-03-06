@@ -28,8 +28,13 @@ const CarLoanCalculator = () => {
   }, [id]);
 
   const handleLoanChange = (e) => {
-    let value = e.target.value.replace(/,/g, ""); 
-    setLoanAmount(value > carPrice ? carPrice : value < 0 ? 0 : value);
+   let value = e.target.value.replace(/[^0-9,]/g, ""); // Allow only numbers & commas
+    value = value.replace(/,/g, ""); // Remove commas for proper number handling
+
+    let numericValue = value ? parseInt(value, 10) : 0;
+    numericValue = Math.min(Math.max(numericValue, 0), carPrice); // Ensure within range
+
+    setLoanAmount(numericValue);
   };
 
   const handleInterestChange = (e) => {
