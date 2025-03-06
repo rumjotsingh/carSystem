@@ -17,8 +17,8 @@ const CarLoanCalculator = () => {
         const response = await fetch(`https://carsystem-backend.onrender.com/api/v1/cars/all-cars/${id}`);
         const carData = await response.json();
 
-        setCarPrice(carData.price);
-        setLoanAmount(carData.price * 0.8);
+        setCarPrice(carData.price + carData.price * 0.1 + carData.price * 0.01);
+        setLoanAmount((carData.price + carData.price * 0.1 + carData.price * 0.01) / 2);
       } catch (error) {
         console.error("Error fetching car price:", error);
       }
@@ -66,7 +66,7 @@ const CarLoanCalculator = () => {
       <Card sx={{ maxWidth: 600, margin: "20px auto", padding: 3, boxShadow: 3, borderRadius: "12px" }}>
         <CardContent>
           <Typography variant="h6" sx={{ textAlign: "center", marginBottom: 2 }}>
-          Car Price: ₹{new Intl.NumberFormat("en-IN").format(carPrice)}
+         On Road Car Price: ₹{new Intl.NumberFormat("en-IN").format(carPrice)}
           </Typography>
 
           <Box
