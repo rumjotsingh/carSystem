@@ -44,7 +44,7 @@ function Contact() {
     }
 
     try {
-      const response = await axios.post("http://localhost:8080/api/v1/feedbacks/create-feedback", {
+      const response = await axios.post("https://carsystem-backend.onrender.com/api/v1/feedbacks/create-feedback", {
         feedback,
         email,
         name,
