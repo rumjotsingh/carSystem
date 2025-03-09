@@ -1,7 +1,79 @@
+import { useState } from "react";
+import axios from "axios";
 import { Container, Box, Typography, TextField, Button, Grid, Card, CardContent } from "@mui/material";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+import { toast } from "react-toastify";
+
 function Contact() {
+  const [feedback, setFeedback] = useState("");
+  const [email, setEmail] = useState("");
+  const [name, setName] = useState("");
+  const [errors, setErrors] = useState({}); // Store validation errors
+
+  const validateForm = () => {
+    let newErrors = {};
+    
+    if (!name.trim()) {
+      newErrors.name = "Name is required.";
+    }
+
+    if (!email.trim()) {
+      newErrors.email = "Email is required.";
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      newErrors.email = "Enter a valid email address.";
+    }
+
+    if (!feedback.trim()) {
+      newErrors.feedback = "Feedback message cannot be empty.";
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0; // Return true if no errors
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (!validateForm()) {
+      toast.error("Please fix the errors in the form.", {
+        position: "top-right",
+        autoClose: 3000,
+      });
+      return;
+    }
+
+    try {
+      const response = await axios.post("http://localhost:8080/api/v1/feedbacks/create-feedback", {
+        feedback,
+        email,
+        name,
+      });
+
+      if (response.status === 200) {
+        toast.success(response.data.message || "Feedback sent successfully!", {
+          position: "top-right",
+          autoClose: 3000,
+        });
+        setFeedback("");
+        setEmail("");
+        setName("");
+        setErrors({});
+      } else {
+        toast.error(response.data.message || "Failed to send feedback.", {
+          position: "top-right",
+          autoClose: 3000,
+        });
+      }
+    } catch (error) {
+      toast.error("Feedback Not Sent. Please try again.", {
+        position: "top-right",
+        autoClose: 3000,
+      });
+      console.log("Error:", error);
+    }
+  };
+
   return (
     <div>
       <Navbar />
@@ -20,7 +92,7 @@ function Contact() {
               <Typography variant="h5" fontWeight="bold" gutterBottom>
                 Get in Touch
               </Typography>
-              <Box component="form" noValidate autoComplete="off" sx={{ mt: 2 }}>
+              <Box component="form" onSubmit={handleSubmit} noValidate autoComplete="off" sx={{ mt: 2 }}>
                 <TextField
                   fullWidth
                   label="Name"
@@ -28,6 +100,10 @@ function Contact() {
                   margin="normal"
                   required
                   placeholder="Enter your name"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  error={!!errors.name}
+                  helperText={errors.name}
                 />
                 <TextField
                   fullWidth
@@ -37,6 +113,10 @@ function Contact() {
                   required
                   placeholder="Enter your email"
                   type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  error={!!errors.email}
+                  helperText={errors.email}
                 />
                 <TextField
                   fullWidth
@@ -45,15 +125,14 @@ function Contact() {
                   margin="normal"
                   required
                   placeholder="Write your message"
+                  value={feedback}
+                  onChange={(e) => setFeedback(e.target.value)}
+                  error={!!errors.feedback}
+                  helperText={errors.feedback}
                   multiline
                   rows={5}
                 />
-                <Button
-                  variant="contained"
-                  color="primary"
-                  fullWidth
-                  sx={{ mt: 2, py: 1.5 }}
-                >
+                <Button type="submit" variant="contained" color="primary" fullWidth sx={{ mt: 2, py: 1.5 }}>
                   Send Message
                 </Button>
               </Box>
@@ -98,4 +177,5 @@ function Contact() {
     </div>
   );
 }
+
 export default Contact;
