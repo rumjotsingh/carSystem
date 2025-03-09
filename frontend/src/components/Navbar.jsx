@@ -32,7 +32,7 @@ function Navbar() {
       localStorage.removeItem("token");
       setIsAuthenticated(false);
       toast.success("Logout successful!", {
-        position: "top-center",
+        position: "top-right",
         autoClose: 3000,
       });
       navigate("/login", { replace: true });
