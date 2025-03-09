@@ -19,10 +19,10 @@ export const sendFeedback = async (req, res) => {
 
   try {
     const mailOptions = {
-      from: email,
       to: process.env.EMAIL_RECEIVER,
+      replayTo: email,
       subject: "New Feedback Received",
-      text: `Feedback from: ${name}\n\n${feedback}`,
+      text: `Feedback from: ${name}\n\n${feedback}\n\nReply to: ${email}`,
     };
 
     transporter.sendMail(mailOptions, (error, info) => {
