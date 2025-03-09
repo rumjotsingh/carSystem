@@ -7,14 +7,14 @@ import carRoutes from "./routes/carListing.routes.js";
 import reviewRoutes from "./routes/review.routes.js";
 import axios from "axios";
 import feedbackesRoutes from "./routes/feedback.routes.js";
-import bodyParser from "body-parser";
+
 dotenv.config();
 const app = express();
-app.use(bodyParser.json());
+
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use("/uploads", express.static("uploads"));
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 main()
   .then(() => {
     console.log("Connected to Database");
