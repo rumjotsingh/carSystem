@@ -22,12 +22,12 @@ function Register() {
       const res = await axios.post("https://carsystem-backend.onrender.com/api/v1/auth/register", form);
       if (res.data.sucess) {
         toast.success("Registration successful!", {
-          position: "top-center",
-          autoClose: 4000,
+          position: "top-right",
+          autoClose: 3000,
         });
         setTimeout(() => {
           navigate("/login");
-        }, 5000);
+        }, 4000);
       }
     } catch (err) {
       console.log(err);
