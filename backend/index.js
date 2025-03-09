@@ -5,17 +5,16 @@ import cors from "cors";
 import userRoutes from "./routes/user.routes.js";
 import carRoutes from "./routes/carListing.routes.js";
 import reviewRoutes from "./routes/review.routes.js";
-import axios from "axios";
+
 import feedbackesRoutes from "./routes/feedback.routes.js";
 
-import path from 'path';
 dotenv.config();
 const app = express();
 
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+app.use("/uploads", express.static("uploads"));
 main()
   .then(() => {
     console.log("Connected to Database");
