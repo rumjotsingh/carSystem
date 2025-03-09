@@ -8,6 +8,7 @@ import reviewRoutes from "./routes/review.routes.js";
 import axios from "axios";
 import feedbackesRoutes from "./routes/feedback.routes.js";
 
+import path from 'path';
 dotenv.config();
 const app = express();
 
