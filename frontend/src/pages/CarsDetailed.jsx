@@ -144,8 +144,8 @@ function CarsDetailed() {
               <CardMedia
               component="img"
               height="200"
-              image={car.image?.url} // ✅ Use Cloudinary URL directly
-              alt={`${car.company} car`}
+              image={details.image?.url} // ✅ Use Cloudinary URL directly
+              alt={`${details.company} car`}
               sx={{ objectFit: "cover" }}
             />
           <CardContent sx={{ padding: 4 }}>
