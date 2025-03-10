@@ -60,13 +60,13 @@ function Homepage() {
                   }}
                 >
                   <CardActionArea>
-                    <CardMedia
-                      component="img"
-                      height="200"
-                      image={`https://carsystem-backend.onrender.com/${car.image.url.replace(/\\/g, "/")}`}
-                      alt={`${car.company} car`}
-                      sx={{ objectFit: "cover" }}
-                    />
+                       <CardMedia
+  component="img"
+  height="200"
+  image={car.image?.url} // ✅ Use Cloudinary URL directly
+  alt={`${car.company} car`}
+  sx={{ objectFit: "cover" }}
+/>
                     <CardContent>
                       <Typography variant="h6" fontWeight="bold" sx={{ mb: 1 }}>
                         {car.company}
