@@ -7,7 +7,8 @@ import {
   EditCarController,
   CarSearchController,
 } from "../controllers/carListing.controllers.js";
-import { authenticate, upload } from "../middleware.js";
+import { authenticate } from "../middleware.js";
+import { upload } from "../cloudinary.js";
 const router = express.Router();
 router.get("/all-cars", GetAllCarsController);
 router.get("/all-cars/:id", getSingleCarController);
