@@ -33,9 +33,10 @@ export const getSingleCarController = async (req, res) => {
 export const createCarListing = async (req, res) => {
   try {
     const { engine, company, description, color, mileage, price } = req.body;
-    const { filename, path } = req.file;
     const id = req.user.userId;
     const errors = [];
+
+    // **Validation Checks**
     if (!engine || typeof engine !== "string") {
       errors.push("Engine is required and must be a string.");
     }
@@ -54,15 +55,19 @@ export const createCarListing = async (req, res) => {
     if (!price || isNaN(price) || price <= 0) {
       errors.push("Price is required and must be a positive number.");
     }
-    if (!filename || !path) {
-      errors.push("Image file is required.");
+
+    // ✅ **Fix: Handle Cloudinary Image Upload Properly**
+    if (!req.file || !req.file.path) {
+      errors.push("Image upload failed or missing.");
     }
+
     if (errors.length > 0) {
       return res.status(400).json({
         message: "Validation error",
         errors,
       });
     }
+
     const newCar = new CarsModel({
       engine,
       company,
@@ -71,15 +76,20 @@ export const createCarListing = async (req, res) => {
       mileage,
       price,
       image: {
-        url: path,
-        filename: filename,
+        url: req.file.path, // ✅ **Use Cloudinary URL instead of local path**
+        filename: req.file.filename, // **Optional**
       },
       owner: id,
     });
+
     await newCar.save();
-    return res.status(200).json({ newCar });
+    return res
+      .status(200)
+      .json({ message: "Car listing created successfully", newCar });
   } catch (err) {
-    return res.status(500).json({ message: "Internal server error" });
+    return res
+      .status(500)
+      .json({ message: "Internal server error", error: err.message });
   }
 };
 export const deleteCarController = async (req, res) => {
