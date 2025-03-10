@@ -141,13 +141,13 @@ function CarsDetailed() {
           <Typography variant="h4" fontWeight="bold" sx={{ mb: 2, textAlign: "center" }}>
             {details.company}
           </Typography>
-          <CardMedia
-            component="img"
-            height="300"
-             image={`https://carsystem-backend.onrender.com/${details.image.url.replace(/\\/g, "/")}`}
-            alt={`${details.company} car`}
-            sx={{ objectFit: "cover" }}
-          />
+              <CardMedia
+              component="img"
+              height="200"
+              image={car.image?.url} // ✅ Use Cloudinary URL directly
+              alt={`${car.company} car`}
+              sx={{ objectFit: "cover" }}
+            />
           <CardContent sx={{ padding: 4 }}>
             <Typography variant="body1" sx={{ mb: 2 }}>
               <strong>Description:</strong> {details.description}
