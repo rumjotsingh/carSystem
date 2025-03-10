@@ -88,7 +88,7 @@ const Results = () => {
                     <CardMedia
                       component="img"
                       height="200"
-                      image={`https://carsystem-backend.onrender.com/${car.image.url.replace(/\\/g, "/")}`}
+                      image={car.image?.url} // ✅ Use Cloudinary URL directly
                       alt={`${car.company} car`}
                     />
                     <CardContent>
