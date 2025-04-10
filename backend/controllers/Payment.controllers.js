@@ -42,8 +42,8 @@ export const getPayment = async (req, res) => {
         },
       ],
       mode: "payment",
-      success_url: `http://localhost:5173/cars/payment/${id}/success`,
-      cancel_url: `http://localhost:5173/cars/payment/${id}/cancel`,
+      success_url: `https://carsystem-zeta.vercel.app/cars/payment/${id}/success`,
+      cancel_url: `https://carsystem-zeta.vercel.app/cars/payment/${id}/cancel`,
     });
 
     res.json({
