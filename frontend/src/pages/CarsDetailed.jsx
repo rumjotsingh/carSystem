@@ -113,9 +113,15 @@ function CarsDetailed() {
   const handleBuy = async() => {
     try {
       
-      const res = await axios.post('https://carsystem-backend.onrender.com/api/v1/stripe/payment',{
-        id:id
-      } );
+     const res = await axios.post(
+        'https://carsystem-backend.onrender.com/api/v1/stripe/payment',
+        { id: id },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
       window.location.href = res.data.url; // Stripe's hosted checkout
     } catch (err) {
       console.error('Error creating checkout session:', err);
