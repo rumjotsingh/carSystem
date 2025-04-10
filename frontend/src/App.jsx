@@ -12,8 +12,14 @@ import { ToastContainer } from "react-toastify";
 import EditPage from './pages/EditPage';
 import Result from './pages/Result';
 import CarLoanCalculator from "./pages/CarLoanCalc";
+
+
+import Success from "./pages/Sucess";
+
+
 const App = () => {
    return(
+  
     <BrowserRouter>
     <ToastContainer/>
     <Routes>
@@ -22,6 +28,9 @@ const App = () => {
         <Route path="/about" element={<About/>}></Route>
         <Route path="/add-car" element={<CarsForm/>}></Route>
         <Route path="/cars/:id" element={<CarsDetailed/>}></Route>
+      
+        <Route path="/cars/payment/:id/success" element={<Success/>} />
+
         <Route path="/edit/:id" element={<EditPage/>}></Route>
         <Route path="/car-loan/:id" element={<CarLoanCalculator />}></Route>
         <Route path="/policy" element={<Policy/>}></Route>
@@ -31,6 +40,7 @@ const App = () => {
         <Route path="*" element={<PageNotFound/>}></Route>
       </Routes>
     </BrowserRouter>
+  
   )
 };
 export default App;
