@@ -149,7 +149,7 @@ function Contact() {
                     Address
                   </Typography>
                   <Typography variant="body1" color="text.secondary">
-                    123 CarDekho Street, Auto City, India
+                    123 AutoHood Street, Auto City, India
                   </Typography>
                 </CardContent>
                 <CardContent>
@@ -165,7 +165,7 @@ function Contact() {
                     Email
                   </Typography>
                   <Typography variant="body1" color="text.secondary">
-                    support@cardekho.com
+                    support@AutoHood.com
                   </Typography>
                 </CardContent>
               </Box>
