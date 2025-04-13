@@ -8,7 +8,7 @@ function Policy() {
       <Container maxWidth="md" sx={{ mt: 4, mb: 4 }}>
         <Box sx={{ textAlign: "center", mb: 4 }}>
           <Typography variant="h4" fontWeight="bold" gutterBottom>
-            CarDekho Privacy Policy
+            AutoHood Privacy Policy
           </Typography>
           <Divider />
         </Box>
@@ -17,7 +17,7 @@ function Policy() {
             Introduction
           </Typography>
           <Typography variant="body1" sx={{ mb: 3 }}>
-            Welcome to DreamCar This privacy policy outlines how we handle your
+            Welcome to AutoHood This privacy policy outlines how we handle your
             personal information and protect your data.
           </Typography>
         </Box>
@@ -57,8 +57,8 @@ function Policy() {
           </Typography>
           <Typography variant="body1">
             For any concerns or questions, reach out to us at{" "}
-            <Link href="mailto:support@cardekho.com" underline="hover">
-              support@cardekho.com
+            <Link href="mailto:support@AutoHood.com" underline="hover">
+              support@AutoHood.com
             </Link>
             .
           </Typography>
@@ -66,7 +66,7 @@ function Policy() {
         <Divider sx={{ my: 4 }} />
         <Box sx={{ textAlign: "center" }}>
           <Typography variant="body2" color="text.secondary">
-            © 2025 CarDekho. All rights reserved.
+            © 2025 AutoHood. All rights reserved.
           </Typography>
         </Box>
       </Container>
