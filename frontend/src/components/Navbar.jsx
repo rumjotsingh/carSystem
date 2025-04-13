@@ -75,7 +75,7 @@ const handleMenuClose = () => {
               <span role="img" aria-label="car">
                 &#128663;
               </span>{" "}
-              DreamCar
+              AutoHood
             </>
           )}
         </Typography>
