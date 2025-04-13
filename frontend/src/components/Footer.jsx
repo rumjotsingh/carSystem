@@ -16,7 +16,7 @@ function Footer() {
        
           <Grid item xs={12}>
             <Typography variant="h6" sx={{ fontWeight: "bold" }}>
-              DreamCar &copy; {new Date().getFullYear()}
+              AutoHood &copy; {new Date().getFullYear()}
             </Typography>
             <Typography variant="body2" sx={{ fontStyle: "italic", mt: 1 }}>
               Turning your dream car into a reality
