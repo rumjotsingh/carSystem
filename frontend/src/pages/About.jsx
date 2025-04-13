@@ -19,7 +19,7 @@ export default function About() {
           }}
         >
           <Typography variant="h3" component="h1" gutterBottom sx={{ fontSize: { xs: "2rem", md: "3rem" } }}>
-            Welcome to DreamCar
+            Welcome to   AutoHood
           </Typography>
           <Typography variant="h6" component="p" paragraph sx={{ fontSize: { xs: "1rem", md: "1.2rem" } }}>
             Simplifying Cars, Amplifying Trust.
