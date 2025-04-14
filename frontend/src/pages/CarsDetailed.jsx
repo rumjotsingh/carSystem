@@ -183,6 +183,12 @@ function CarsDetailed() {
               <Grid item xs={12} sm={6}>
                 <Typography><strong>Price:</strong> ₹{new Intl.NumberFormat("en-IN").format(details.price)}</Typography>
               </Grid>
+               <Grid item xs={12} sm={6}>
+                <Typography><strong>Owner:</strong> {details.owner.name}</Typography>
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <Typography><strong>Email:</strong> {details.owner.email}</Typography>
+              </Grid>
             </Grid>
 
             {/* Button Stack */}
