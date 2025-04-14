@@ -20,7 +20,7 @@ export const getSingleCarController = async (req, res) => {
     const car = await CarsModel.findById(id).populate({
       path: "reviews",
       populate: { path: "author", select: "name email" }, // Populate the author details
-    });
+    }).populate("owner", "name email");
     if (!car) {
       return res.status(404).json({ message: "Car not found" });
     } else {
