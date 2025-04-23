@@ -12,6 +12,7 @@ import { ToastContainer } from "react-toastify";
 import EditPage from './pages/EditPage';
 import Result from './pages/Result';
 import CarLoanCalculator from "./pages/CarLoanCalc";
+import Cancel from "./pages/Cancel";
 
 
 import Success from "./pages/Sucess";
@@ -30,7 +31,7 @@ const App = () => {
         <Route path="/cars/:id" element={<CarsDetailed/>}></Route>
       
         <Route path="/cars/payment/:id/success" element={<Success/>} />
-
+         <Route path="/cars/payment/:id/cancel" element={<Cancel/>} ></Route>
         <Route path="/edit/:id" element={<EditPage/>}></Route>
         <Route path="/car-loan/:id" element={<CarLoanCalculator />}></Route>
         <Route path="/policy" element={<Policy/>}></Route>
