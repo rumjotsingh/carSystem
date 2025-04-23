@@ -1,13 +1,12 @@
 
 import { Container, Typography, Button, Box } from '@mui/material';
 import CancelIcon from '@mui/icons-material/Cancel';
-import Navbar from '../components/Navbar';
-import Footer from '../components/Footer';
+
 
 const Cancel = () => {
   return (
-    <>
-    <Navbar/>
+    
+ 
     <Container maxWidth="sm" sx={{ textAlign: 'center', mt: 10 }}>
       <CancelIcon sx={{ fontSize: 80, color: 'red' }} />
       <Typography variant="h4" sx={{ mt: 2, fontWeight: 'bold', color: 'red' }}>
@@ -22,8 +21,7 @@ const Cancel = () => {
         </Button>
       </Box>
     </Container>
-    <Footer/>
-    </>
+   
   );
 };
 
