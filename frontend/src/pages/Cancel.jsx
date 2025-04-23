@@ -13,7 +13,7 @@ const Cancel = () => {
         Looks like you cancelled the payment. You can try again anytime.
       </Typography>
       <Box mt={4}>
-        <Button variant="contained" color="error" href="/buy">
+        <Button variant="contained" color="error" href="/">
           Try Again
         </Button>
       </Box>
