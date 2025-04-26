@@ -3,13 +3,30 @@ import fs from "fs";
 import path from "path";
 export const GetAllCarsController = async (req, res) => {
   try {
-    let cars = await CarsModel.find({})
+    const page = parseInt(req.query.page) || 1; // Default to page 1
+    const limit = parseInt(req.query.limit) || 3; // Default to 10 cars per page
+    const skip = (page - 1) * limit;
+
+    const totalCars = await CarsModel.countDocuments();
+
+    const cars = await CarsModel.find({})
+      .skip(skip)
+      .limit(limit)
       .populate("owner")
       .populate({
         path: "reviews",
         populate: { path: "author", select: "name email" },
       });
-    return res.status(200).json({ cars });
+
+    return res.status(200).json({
+      cars,
+      pagination: {
+        totalCars,
+        totalPages: Math.ceil(totalCars / limit),
+        currentPage: page,
+        perPage: limit,
+      },
+    });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
