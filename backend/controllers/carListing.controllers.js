@@ -3,20 +3,30 @@ import fs from "fs";
 import path from "path";
 export const GetAllCarsController = async (req, res) => {
   try {
-    const page = parseInt(req.query.page) || 1; // Default to page 1
-    const limit = parseInt(req.query.limit) || 3; // Default to 10 cars per page
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 3;
     const skip = (page - 1) * limit;
 
-    const totalCars = await CarsModel.countDocuments();
-
-    const cars = await CarsModel.find({})
-      .skip(skip)
-      .limit(limit)
-      .populate("owner")
-      .populate({
-        path: "reviews",
-        populate: { path: "author", select: "name email" },
-      });
+    // Use Promise.all to parallelize total count & data fetch
+    const [totalCars, cars] = await Promise.all([
+      CarsModel.countDocuments(),
+      CarsModel.find({})
+        .skip(skip)
+        .limit(limit)
+        .select('model brand year price') // Return only required fields (add what you need)
+        .populate({
+          path: "owner",
+          select: "name email", // Only needed fields
+          options: { lean: true }, // convert populate to plain JS
+        })
+        .populate({
+          path: "reviews",
+          select: "rating comment",
+          populate: { path: "author", select: "name email" },
+          options: { lean: true },
+        })
+        .lean() // Remove Mongoose overhead
+    ]);
 
     return res.status(200).json({
       cars,
@@ -28,25 +38,11 @@ export const GetAllCarsController = async (req, res) => {
       },
     });
   } catch (err) {
-    res.status(500).json({ message: err.message });
+    console.error(err);
+    res.status(500).json({ message: 'Server Error' });
   }
 };
-export const getSingleCarController = async (req, res) => {
-  try {
-    let { id } = req.params;
-    const car = await CarsModel.findById(id).populate({
-      path: "reviews",
-      populate: { path: "author", select: "name email" }, // Populate the author details
-    }).populate("owner", "name email");
-    if (!car) {
-      return res.status(404).json({ message: "Car not found" });
-    } else {
-      return res.status(200).json(car);
-    }
-  } catch (err) {
-    res.status(500).json({ message: err.message });
-  }
-};
+
 export const createCarListing = async (req, res) => {
   try {
     const { engine, company, description, color, mileage, price } = req.body;
