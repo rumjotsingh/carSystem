@@ -1,36 +1,43 @@
+import mongoose from "mongoose";
 import Review from "../models/review.js";
 import CarsModel from "../models/carListing.js";
+
 export const AddReviewsController = async (req, res) => {
   try {
     const { comment, rating, carListingId } = req.body;
+    const userId = req.user.userId;
 
-    const id = req.user.userId;
+    if (!comment || !rating || !carListingId) {
+      return res.status(400).json({ message: "All fields are required." });
+    }
 
-    const carListing = await CarsModel.findById(carListingId);
+    // Validate ObjectId
+    if (!mongoose.Types.ObjectId.isValid(carListingId)) {
+      return res.status(400).json({ message: "Invalid Car Listing ID." });
+    }
+
+    const carListing = await CarsModel.findById(carListingId).select("_id").lean();
     if (!carListing) {
       return res.status(404).json({ message: "Car listing not found." });
     }
 
-    if (!comment || !rating) {
-      return res.status(500).json({ message: "All Fiedls Are Required" });
-    }
-    const newReview = new Review({
+    const newReview = await new Review({
       comment,
       rating,
       createdAt: new Date(),
-      author: id,
+      author: userId,
       car: carListingId,
-    });
+    }).save();
 
-    const savedReview = await newReview.save();
+    // Atomic push review ID into car's reviews
+    await CarsModel.updateOne(
+      { _id: carListingId },
+      { $push: { reviews: newReview._id } }
+    );
 
-    carListing.reviews.push(savedReview._id);
-    await carListing.save();
-    return res
-      .status(200)
-      .json({ sucess: true, savedReview, message: "Review SucessFully Added" });
+    res.status(200).json({ success: true, newReview, message: "Review Successfully Added." });
   } catch (err) {
-    return res.status(500).json({ message: err.message });
+    res.status(500).json({ message: err.message });
   }
 };
 
@@ -38,48 +45,50 @@ export const deleteReview = async (req, res) => {
   try {
     const { reviewId } = req.params;
     const { carId } = req.body;
-      const userId = req.user.userId;
+    const userId = req.user.userId;
 
-    // Find and delete the review
+    // Validate IDs
+    if (!mongoose.Types.ObjectId.isValid(reviewId) || !mongoose.Types.ObjectId.isValid(carId)) {
+      return res.status(400).json({ message: "Invalid ID(s) provided." });
+    }
 
-    const review = await Review.findById(reviewId);
+    const review = await Review.findById(reviewId).select("author").lean();
     if (!review) {
-      return res.status(404).json({ message: "Review not found" });
-    }
-      if (review.author.toString() !== userId) {
-      return res
-        .status(403)
-        .json({ message: "You are not authorized to delete this review" });
+      return res.status(404).json({ message: "Review not found." });
     }
 
-    // Check if the review belongs to the car
-    const car = await CarsModel.findById(carId);
-    if (!car) {
-      return res.status(404).json({ message: "Car listing not found" });
+    if (review.author.toString() !== userId) {
+      return res.status(403).json({ message: "Not authorized to delete this review." });
     }
 
-    // Remove the review ID from the car's reviews array
-    car.reviews = car.reviews.filter((id) => id.toString() !== reviewId);
-    await car.save();
+    // Atomic delete & pull review from car
+    await Promise.all([
+      Review.deleteOne({ _id: reviewId }),
+      CarsModel.updateOne({ _id: carId }, { $pull: { reviews: reviewId } }),
+    ]);
 
-    // Delete the review
-    await review.deleteOne();
-
-    res.status(200).json({ message: "Review deleted successfully" });
+    res.status(200).json({ message: "Review deleted successfully." });
   } catch (error) {
     console.error("Error deleting review:", error.message);
-    res.status(500).json({ message: "Internal server error" });
+    res.status(500).json({ message: "Internal server error." });
   }
 };
+
 export const getCarDetails = async (req, res) => {
   try {
     const { carId } = req.params;
 
-    // Find the car by ID and populate its reviews and their authors
-    const car = await CarsModel.findById(carId).populate({
-      path: "reviews",
-      populate: { path: "author", select: "name email" }, // Populate the author details
-    });
+    if (!mongoose.Types.ObjectId.isValid(carId)) {
+      return res.status(400).json({ message: "Invalid Car ID." });
+    }
+
+    const car = await CarsModel.findById(carId)
+      .populate({
+        path: "reviews",
+        select: "comment rating createdAt",
+        populate: { path: "author", select: "name email" },
+      })
+      .lean();
 
     if (!car) {
       return res.status(404).json({ message: "Car not found." });
