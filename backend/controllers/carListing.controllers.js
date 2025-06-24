@@ -33,7 +33,22 @@ export const GetAllCarsController = async (req, res) => {
     res.status(500).json({ message: "Server Error", error: error.message });
   }
 };
-
+export const getSingleCarController = async (req, res) => {
+  try {
+    let { id } = req.params;
+    const car = await CarsModel.findById(id).populate({
+      path: "reviews",
+      populate: { path: "author", select: "name email" }, // Populate the author details
+    });
+    if (!car) {
+      return res.status(404).json({ message: "Car not found" });
+    } else {
+      return res.status(200).json(car);
+    }
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
 // CREATE Car Listing
 export const createCarListing = async (req, res) => {
   try {
