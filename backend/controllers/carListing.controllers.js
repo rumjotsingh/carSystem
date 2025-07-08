@@ -14,7 +14,7 @@ export const GetAllCarsController = async (req, res) => {
       CarsModel.find({})
         .skip(skip)
         .limit(limit)
-        .select("model brand year price")
+        
         .populate({ path: "owner", select: "name email", options: { lean: true } })
         .populate({ path: "reviews", select: "rating comment", populate: { path: "author", select: "name" }, options: { lean: true } })
         .lean()
